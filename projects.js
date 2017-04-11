@@ -1,95 +1,47 @@
-//// USAGE:
-//  node projects.js GITHUB_TOKEN
+#!/usr/bin/env node
+// USAGE:
+// Set environment var GH_TOKEN
+// node projects.js organization
 
-var fs = require('fs')
-var through = require('through2')
 var pumpify = require('pumpify')
-var request = require('request')
+var requestStream = require('requesturl-stream')
+var ts = require('tool-stream')
+
+var TOKEN = process.env.GH_TOKEN
 
 var APIROOT = 'https://api.github.com/'
-var TOKEN = process.argv[2]
+var organization = process.argv[2]
+var projectURL = APIROOT + 'orgs/' + organization + '/projects'
 
-var getProjects = function (org, cb) {
-  var stream = pumpify.obj(
-    getOrgProjects(org),
-    sendRequest(),
-    getColumnsUrl(),
-    sendRequest(),
-    getCardUrl(), 
-    sendRequest(), // runs for each column (i.e. produces a set of issues for each column )
-    getIssueUrl(), 
-    sendRequest() // runs for each issue ( i.e. produces one set of issues (ideally this would produce a set of issues for each column))
-  )
-  if (cb) { stream.pipe(concat(cb)) } else { return stream }
-}
-
-function getOrgProjects (org) {
-  var stream = through.obj(transform)
-  return stream
-
-  function transform (obj, enc, next) {
-    var url = APIROOT + 'orgs/' + org + '/projects'
-    this.push(url)
-    next()
-  }
-}
-
-// SendRequest
-function sendRequest () {
-  var headers = {
+var requestOptions = {
+  json: true,
+  headers: headers = {
     'Accept': 'application/vnd.github.inertia-preview+json',
     'Authorization': 'token ' + TOKEN,
-    'User-Agent': 'BioNode'
-  }
-
-  var stream = through.obj(transform)
-  return stream
-
-  function transform (url, enc, next) {
-    var self = this
-    var options = { url: url, headers: headers }
-    request(options, gotData)
-    function gotData (err, res, body) {
-      self.push(body)
-      next()
-    }
+    'User-Agent': 'request'
   }
 }
 
-function getColumnsUrl () {
-  var stream = through.obj(transform)
-  return stream
+var columnsNames = {}
+var issuesColumn = {}
 
-  function transform (obj, enc, next) {
-    var data = JSON.parse(obj)
-    this.push(data[0].columns_url)
-    next()
-  }
-}
+var pipeline = pumpify.obj(
+  requestStream(requestOptions),
+  ts.arraySplit(),
+  ts.extractProperty('columns_url'),
+  requestStream(requestOptions),
+  ts.arraySplit(),
+  ts.storeToObject(columnsNames, '{{url}}', 'name'),
+  ts.extractProperty('cards_url'),
+  requestStream(requestOptions),
+  ts.arraySplit(),
+  ts.storeToObject(issuesColumn, '{{content_url}}', 'column_url'),
+  ts.extractProperty('content_url'),
+  requestStream(requestOptions),
+  ts.attachStoredValue(issuesColumn, 'url', 'column_url'),
+  ts.attachStoredValue(columnsNames, 'column_url', 'column_name'),
+  ts.JSONToBuffer(),
+  process.stdout
+)
 
-function getCardUrl () {
-  var stream = through.obj(transform)
-  return stream
-
-  function transform (obj, enc, next) {
-    var data = JSON.parse(obj)
-    fs.writeFile('columns.json', obj)
-    data.forEach(arr => this.push(arr.cards_url)) // push once for each column
-    next()
-  }
-}
-
-function getIssueUrl () {
-  var stream = through.obj(transform)
-  return stream
-
-  function transform (obj, enc, next) {
-    var data = JSON.parse(obj)
-    data.forEach(arr => this.push(arr.content_url)) // push for each issue... 
-    next()
-  }
-}
-
-var pipeline = getProjects('bionode')
-pipeline.write()
-pipeline.pipe(process.stdout)
+pipeline.write(projectURL)

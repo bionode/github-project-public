@@ -1,0 +1,102 @@
+.header
+  .header-nav
+    .header-nav-links
+      ul.header-nav-list
+        li
+          a(href="index.html") Bionode
+        li
+          a(href="https://rawgit.com/bionode/bionode/master/docs/bionode.html") Documentation
+        li
+          a(href="#") Project Board
+      a(href="https://github.com/bionode/bionode#readme", target="_blank")
+        .button
+          span.octocat 
+          | View on GitHub
+    .header-logo bionode
+  .header-info
+    .header-title.header-title-bigger Modular and universal bioinformatics
+    .header-horizontal-rule
+    .header-description Bionode provides pipeable UNIX command line tools and JavaScript APIs for bioinformatic analysis workflows.
+    .header-continue
+      a(href="#content") Find out more 
+        span.rsaquo &rsaquo;
+.content#content
+  .content-title Project Board
+  .content-horizontal-rule
+  .content-sub-container
+    .project-columns-container
+      each cards, column in public._data
+        .project-column
+          .column-header
+            span.project-title #{column} 
+            span.project-cards-count #{cards.length}
+          .column-body
+            each card in cards
+              .project-card
+                .card-icon
+                  svg.open.octicon(aria-label="Open Issue" height="16" role="img" version="1.1" viewBox="0 0 14 16" width="14") 
+                    path(fill-rule="evenodd" d="M7 2.3c3.14 0 5.7 2.56 5.7 5.7s-2.56 5.7-5.7 5.7A5.71 5.71 0 0 1 1.3 8c0-3.14 2.56-5.7 5.7-5.7zM7 1C3.14 1 0 4.14 0 8s3.14 7 7 7 7-3.14 7-7-3.14-7-7-7zm1 3H6v5h2V4zm0 6H6v2h2v-2z")
+                a.card-header(href='#{card.html_url}')  #{card.title}
+                .card-text
+                  | bionode/bionode#1 opened by 
+                  a(href="#{card.user.html_url}")
+                    | #{card.user.login}
+                .card-labels
+                  each label in card.labels
+                    span(style="background-color:##{label.color}; color: #fff;") #{label.name}
+
+.footer
+  .footer-directory
+    .footer-column
+      .footer-heading Explore
+      .footer-horizontal-rule
+      ul.footer-nav-list
+        li
+          span.rsaquo &rsaquo; 
+          a(href="http://www.stickermule.com/marketplace/1917-bionode-modular-and-universal-bioinformatics") Get Stickers
+    .footer-column
+      .footer-heading Learn
+      .footer-horizontal-rule
+      ul.footer-nav-list
+        li
+          span.rsaquo &rsaquo; 
+          a(href="http://try.bionode.io") Try
+    .footer-column
+      .footer-heading Connect
+      .footer-horizontal-rule
+      ul.footer-nav-list
+        li
+          a(href="https://twitter.com/bionode")
+            span.twitter-green
+            | Twitter
+        li
+          a(href="https://github.com/bionode")
+            span.octocat-green
+            | GitHub
+  .footer-credits
+    span.footer-emphasized bionode 
+    | &bull; 2014 &bull; design by 
+    a(href="https://github.com/flipside-org") flipside  
+    | for 
+    a(href="https://dat-data.com") dat 
+    | &bull; dat kindly granted reuse for bionode
+script.
+  (function (i, s, o, g, r, a, m) {
+  i['GoogleAnalyticsObject'] = r;
+  i[r] = i[r] || function () {
+  (i[r].q = i[r].q || []).push(arguments)
+  }, i[r].l = 1 * new Date();
+  a = s.createElement(o),
+  m = s.getElementsByTagName(o)[0];
+  a.async = 1;
+  a.src = g;
+  m.parentNode.insertBefore(a, m)
+    })(window, document, 'script', '//www.google-analytics.com/analytics.js', 'ga');
+    ga('create', 'UA-54802258-1', 'auto');
+    ga('send', 'pageview');
+
+script.
+  ((window.gitter = {}).chat = {}).options = {
+    room: 'bionode/bionode'
+  };
+script(src="https://sidecar.gitter.im/dist/sidecar.v1.js", async, defer)

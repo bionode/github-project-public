@@ -4,12 +4,12 @@ Please improve it with pull requests.
 
 # Instructions
 ```bash
-git clone git@github.com:bionode/bionode.github.io.git
+git clone git@github.com:bionode/github-project-public
 npm install -g harp
 harp server
 (edit files and watch changes on http://localhost:9000/)
 harp compile
 git commit -am "Commit message"
-git push origin dev
-# master will be auto-compiled by Travis CI
+git push origin
+# gh-pages will be auto-compiled by Travis CI
 ```

@@ -9,6 +9,8 @@ rm _data.json
 # run projects.js to pull the latest data from github Project
 node projects.js bionode | sed -e 's|$|,|' -e '$s|,$||' | (echo '[' && cat - && echo ']') | jq 'group_by(.column_name) | map( { (.[0].column_name|tostring) : .  }) | add' > _data.json
 
+rm -r node_modules
+
 # run our compile script, discussed above
 harp compile
 # go to the out directory and create a *new* Git repo

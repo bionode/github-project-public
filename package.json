@@ -1,5 +1,5 @@
 {
-  "name": "Public Project Board",
+  "name": "Public-Project-Board",
   "version": "1.0.0",
   "description": "Make Github Project Board publically active.",
   "main": "projects.js",

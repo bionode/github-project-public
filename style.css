@@ -1,7 +1,21 @@
 body {
     font-family: 'Source Sans Pro', sans-serif;
+    text-align: center;
+    background: #f4f4f7;
+    color: #444;
     margin: 0;
     padding: 0;
+}
+
+h1{
+  font-size: 65px;
+  line-height: 1.2em;
+  border-bottom: #CCC solid 1px;
+  padding: 20px 0;
+}
+
+h3{
+  font-weight: 300;
 }
 
 .button {
@@ -587,7 +601,7 @@ body {
 }
 
 .project-title {
-    font-size: 28px;
+    font-size: 24px;
     font-weight: 700;
     color: #2A3749;
     text-align: center;
@@ -619,7 +633,7 @@ body {
 }
 
 .card-header {
-    font-size: 20px;
+    font-size: 18px;
     font-weight: 600;
     color: #0366d6;
     text-align: center;
@@ -628,6 +642,7 @@ body {
     outline-width: 0;
     margin-right: 24px;
     margin-bottom: 4px;
+    text-transform: capitalize;
 }
 
 .card-icon {
@@ -642,17 +657,29 @@ body {
     color: #28a745;
 }
 
+.closed.octicon.issue {
+    fill: #cb2431;
+    color: #cb2431;
+}
+
+.closed.octicon.pull_request {
+    fill: #6f42c1;
+    color: #6f42c1;
+}
+
 .card-text {
     padding: 7px 0;
     display: block;
     color: #586069;
     font-size: 90%;
+    min-height: 20px;
 }
 
 .card-labels {
     position: relative;
     display: block;
     padding-bottom: 8px;
+    min-height: 20px;
 }
 
 .card-labels span {
@@ -670,4 +697,44 @@ body {
     border-radius: 2px;
     box-shadow: inset 0 -1px 0 rgba(27, 31, 35, 0.12);
     margin-right: 6px;
+}
+
+
+.card-assignees {
+    display: inline-block;
+    white-space: nowrap;
+    padding-right: 16px !important;
+    margin-bottom: 8px !important;
+    bottom: 0 !important;
+    right: 0 !important;
+    position: absolute !important;
+}
+
+.card-assignees .avatar:last-child {
+    z-index: 1;
+    margin-right: 0;
+    border-right: 0;
+}
+
+.card-assignees .avatar:first-child {
+    z-index: 3;
+}
+
+.card-assignees .avatar:only-child {
+    background-color: transparent;
+}
+
+.avatar {
+    display: inline-block;
+    overflow: hidden;
+    line-height: 1;
+    vertical-align: middle;
+    border-radius: 3px;
+}
+
+@media screen and (max-width: 1800px) {
+    .content-sub-container {
+        margin: 0 20px 20px 20px;
+        padding-top: 30px;
+    }
 }

@@ -8,9 +8,7 @@ mkdir www;
 rm _data.json
 # run projects.js to pull the latest data from github Project
 node projects.js bionode | \
-  sed -e 's|$|,|' -e '$s|,$||' | \
-  (echo '[' && cat - && echo ']') | \
-  jq 'group_by(.column_name) |
+  jq -s 'group_by(.column_name) |
     map( { (.[0].column_name|tostring) : .  }) |
     add |
     {

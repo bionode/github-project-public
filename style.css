@@ -61,6 +61,10 @@ h3{
     margin-top: 8px;
 }
 
+.header-logo a:hover {
+  text-decoration: none;
+}
+
 .header-nav {
     height: 80px;
     position: absolute;

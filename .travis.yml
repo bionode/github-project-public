@@ -1,0 +1,12 @@
+before_script: npm install -g harp
+script: bash ./deploy.sh
+language: node_js
+node_js:
+  - 5.7.1
+env:
+  global:
+    - GH_REF: github.com/bionode/github-project-public.git
+    - secure: Ok3QTzorAdU3kgjAGlui3TxskpeLU6tTiAUct1SMKB0W8LOyjS6HCScqUy1ET+6O4sv3IIDdCcntQyNmv5vP75nZPQ55lQnBjfz07mdOxcBAaRmb6gkbSNGnCWuneGG8jSdU2+Gd2v2/aSgBgik1ObiO4HwjTleoR4ZlJUl1wsmeB2Xno22/PHkS0zyOKOzhpp8vn+K32NuPPTP9q3uTVlIFuEyriFHqC3IKXEClnG9mf6V0pbJs6k/KrTGo+PLC5OagAko5nLluskH+LTjTcV8MmW37SA5IEBhtkFXbLFGMoLo1QvuoZIVncmb1dfyveaVLiwytuRNhA/+/Vn9QAOypI5OiIeh83ua4Oxes1iYRexNyegHZSuZ+9DLk9TRTWQsGhhQ37GFmcvVHLOMDNyJlUtc4/Y7BS9y0K2tBlSLbNnWCHZwj2j955CiF0SPocLtioWR+avEIiKBPPlhbDu+Xi7PrQO0hFIpfktof/0Gmf/9RGE3OZptao68L/KxgAtEygzSQQAeP3UjHs+YyDfYM+sU4h+bv9saQpTWFgwkE88AdebPrQuO3PCUdCSUk83UdF6reLnycP5BqMn9WmlgE5Ux6hG4MOWfdBefbDJnIpWKSzIn9i7lOM9QGKY3+082OaxkIWZYO9fRsNhGo7+b/692CDQN4HtY5xAU3P18=
+branches:
+  only:
+    - master

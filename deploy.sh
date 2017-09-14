@@ -7,6 +7,9 @@ rm -f _data.json
 
 mkdir www;
 
+# Install dependencies for projects.js
+npm install;
+
 # run projects.js to pull the latest data from github Project
 node $PWD/projects.js bionode | \
   "$PWD/bin/jq-linux64" -s 'group_by(.column_name) |
